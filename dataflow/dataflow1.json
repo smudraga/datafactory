@@ -37,6 +37,9 @@
 				},
 				{
 					"name": "sort1"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -63,7 +66,8 @@
 				"     broadcast: 'auto')~> empdeptjoin",
 				"empdeptjoin aggregate(groupBy(emp@deptno),",
 				"     maxsaldept = sum(toInteger(sal))) ~> maxsalrybydept",
-				"maxsalrybydept sort(asc(deptno, true)) ~> sort1",
+				"derivedColumn1 sort(asc(deptno, true)) ~> sort1",
+				"maxsalrybydept derive(derivedColumn = maxsaldept*11) ~> derivedColumn1",
 				"sort1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
